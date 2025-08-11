@@ -1,0 +1,69 @@
+namespace ConsoleApp1
+{
+    internal class Class1
+    {
+        static void Main(string[] args)
+        {
+            Contato c01 = new("LipeX", "123", "Prof", 0);
+            Contato c02 = new("LipeX", "123", "Prof", 0);
+            Contato c03 = new("LipeX", "123", "Prof", 0);
+
+            AgendaTelefonica ag = new();
+
+            ag.InserirContato(c01);
+            ag.InserirContato(c02);
+            ag.InserirContato(c03);
+
+            Console.WriteLine(ag.BuscarContato("LipeX").apelido);
+            Console.WriteLine($"Qtd de contatos na agenda é: {ag.ToString QtdContatos()}");
+
+        }
+
+    }
+}
+
+
+namespace ConsoleApp1
+{
+    internal class AgendaTelefonica
+    {
+        public Dictionary <string, Contato> Agenda {  get; set; }
+
+        public AgendaTelefonica() => Agenda = [];
+        
+        
+
+        public void InserirContato(Contato contato)
+        {
+            Agenda.Add(contato.nome, contato);
+        }
+
+        public Contato BuscarContato(string nome)
+        {
+            return Agenda[nome];
+        }
+
+        public int QtdContatos()
+        {
+            return Agenda.Count;
+        }
+
+    }
+}
+
+
+
+namespace ConsoleApp1
+{
+    internal class Contato(string nome, string numero, string apelido, int divida)
+    {
+
+
+        public string nome { get; set; } = nome;
+        public string NumeroTelefone { get; set; } = numero;
+        public string apelido { get; set; } = apelido;
+        public int QuantoMeDeve { get; set; } = divida;
+
+    }
+
+}
