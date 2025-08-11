@@ -1,0 +1,58 @@
+namespace ConsoleApp1
+{
+    internal class Conta
+    {
+        private double saldo;
+
+        private int numero;
+
+        public Boolean Sacar(double valor)
+        {
+            if ( saldo >  valor )
+            {
+                saldo = saldo - valor;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public void Depositar(double valor)
+        {
+            saldo = saldo + valor;
+        }
+
+        public void Transferir(Conta conta, double valor)
+        {
+
+        }
+
+        private bool VerificarTransacao(double valor)
+        {
+            if (!(Sacar(valor) = true))
+            {
+                Console.WriteLine("Saque falhou! ");
+            }
+            else
+            {
+                Console.WriteLine("Saque realizado com sucesso! ");
+            }
+        }
+    }
+}
+
+
+
+
+namespace ConsoleApp1
+{
+    internal class Cliente
+    {
+        private String nome;
+        private String endereco;
+        private String cpf;
+        public Conta conta;
+    }
+}
