@@ -1,0 +1,39 @@
+internal class Program
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Quer converter a temperatura de qual jeito? Selecione a opção abaixo: \n");
+        
+
+        Console.WriteLine("Digite (1) se quiser converter de Celsius para Fahrenheit: \n" +
+            "Digite (2) se quiser converter de Fahrenheit para Celsius: \n" +
+            "Digite (3) se quiser converter de Celsius para Kelvin: \n" +
+            "Digite (4) se quiser converter de Kelvin para Celsius: \n");
+        int resp = int.Parse(Console.ReadLine());
+        
+        Console.WriteLine("Agora digite a temperatura: \n");
+        float temp = float.Parse(Console.ReadLine());
+
+            switch (resp)
+            {
+
+                case 1:
+                float total = (float)((temp * 1.8) + 32);
+                    break;
+                case 2:
+                float total2 = (float)((temp * 1.8) + 32);
+                break;
+                case 3:
+                float total = (float)((temp * 1.8) + 32);
+                break;
+                case 4:
+                float total = (float)((temp * 1.8) + 32);
+                break;
+                default:
+                    break;
+            }
+        }
+       
+
+    }
+}
