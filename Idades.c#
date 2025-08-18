@@ -1,0 +1,58 @@
+internal class Program
+{
+    static void Main(string[] args)
+    {
+        int grupoA = 0;
+        int grupoB = 0;
+        int grupoC = 0;
+        int grupoD = 0;
+        int grupoE = 0;
+        List<float> Notas =  new List<float>();
+
+        Console.WriteLine("Digite quantas idades irá digitar: \n");
+        int qtd = int.Parse(Console.ReadLine());
+
+        Console.WriteLine("Digite as idades: \n");
+
+        for (int i = 0; i < qtd; i++)
+        {
+            var resp = float.Parse(Console.ReadLine());
+            Notas.Add(resp);
+            switch (resp)
+            {
+                case <= 15:
+                    grupoA++;
+                    break;
+                case <= 30:
+                    grupoB++;
+                    break;
+                case <= 45:
+                    grupoC++;
+                    break;
+                case <= 60:
+                    grupoD++;
+                    break;
+                case >= 61:
+                    grupoE++;
+                    break;
+                default:
+                    break;
+
+            }
+        }
+        int total = Notas.Count;
+
+        int porA = (grupoA * 100) / total;
+        int porB = (grupoB * 100) / total;
+        int porC = (grupoC * 100) / total;
+        int porD = (grupoD * 100) / total;
+        int porE = (grupoE * 100) / total;
+
+        Console.WriteLine($"A porcentagem do grupo A foi: {porA}");
+        Console.WriteLine($"A porcentagem do grupo B foi: {porB}");
+        Console.WriteLine($"A porcentagem do grupo C foi: {porC}");
+        Console.WriteLine($"A porcentagem do grupo D foi: {porD}");
+        Console.WriteLine($"A porcentagem do grupo E foi: {porE}");
+
+    }
+}
