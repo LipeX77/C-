@@ -158,21 +158,25 @@ namespace quizGame
                     correctAnswer = 3; break;
 
                 case 2:
+                    pictureBox1.Image = Properties.Resources.thousand_sunny;
                     lblQuestion.Text = "Em One Piece, qual é o nome do navio que substitui o Going Merry?";
                     button1.Text = "Going Sunny"; button2.Text = "Thousand Sunny"; button3.Text = "Red Force"; button4.Text = "Oro Jackson";
                     correctAnswer = 2; break;
 
                 case 3:
+                    pictureBox1.Image = Properties.Resources.goku;
                     lblQuestion.Text = "Em Dragon Ball, qual é a técnica mais famosa do Goku?";
                     button1.Text = "Rasengan"; button2.Text = "Kamehameha"; button3.Text = "Final Flash"; button4.Text = "Bankai";
                     correctAnswer = 2; break;
 
                 case 4:
+                    pictureBox1.Image = Properties.Resources.killua;
                     lblQuestion.Text = "Em Hunter x Hunter, quem é o melhor amigo de Gon?";
                     button1.Text = "Leorio"; button2.Text = "Kurapika"; button3.Text = "Killua"; button4.Text = "Hisoka";
                     correctAnswer = 3; break;
 
                 case 5:
+                    pictureBox1.Image = Properties.Resources.mikey;
                     lblQuestion.Text = "Em Tokyo Revengers, qual é o nome da gangue liderada por Mikey?";
                     button1.Text = "Valhalla"; button2.Text = "Black Dragons"; button3.Text = "Tokyo Manji Gang (Toman)"; button4.Text = "Tenjiku";
                     correctAnswer = 3; break;
@@ -187,26 +191,31 @@ namespace quizGame
             switch (q)
             {
                 case 1:
+                    pictureBox1.Image = Properties.Resources.stark;
                     lblQuestion.Text = "No Universo Marvel, qual é o alter ego do Homem de Ferro?";
                     button1.Text = "Bruce Wayne"; button2.Text = "Clark Kent"; button3.Text = "Tony Stark"; button4.Text = "Peter Parker";
                     correctAnswer = 3; break;
 
                 case 2:
+                    pictureBox1.Image = Properties.Resources.gotham;
                     lblQuestion.Text = "No Universo DC, qual cidade é protegida pelo Batman?";
                     button1.Text = "Metrópolis"; button2.Text = "Gotham"; button3.Text = "Central City"; button4.Text = "Star City";
                     correctAnswer = 2; break;
 
                 case 3:
+                    pictureBox1.Image = Properties.Resources.joiadotempo;
                     lblQuestion.Text = "Qual Joia do Infinito controla o tempo?";
                     button1.Text = "Joia da Realidade"; button2.Text = "Joia do Espaço"; button3.Text = "Joia do Tempo"; button4.Text = "Joia da Alma";
                     correctAnswer = 3; break;
 
                 case 4:
+                    pictureBox1.Image = Properties.Resources.superman;
                     lblQuestion.Text = "Qual símbolo aparece no peito do Superman?";
                     button1.Text = "Um morcego"; button2.Text = "A letra \"S\""; button3.Text = "Um raio"; button4.Text = "Uma águia";
                     correctAnswer = 2; break;
 
                 case 5:
+                    pictureBox1.Image = Properties.Resources.black;
                     lblQuestion.Text = "Quem é o rei de Wakanda em Pantera Negra?";
                     button1.Text = "M'Baku"; button2.Text = "Erik Killmonger"; button3.Text = "T'Challa"; button4.Text = "Shuri";
                     correctAnswer = 3; break;
@@ -221,26 +230,31 @@ namespace quizGame
             switch (q)
             {
                 case 1:
+                    pictureBox1.Image = Properties.Resources.dom;
                     lblQuestion.Text = "Quem foi o primeiro imperador do Brasil?";
                     button1.Text = "Dom Pedro I"; button2.Text = "Dom Pedro II"; button3.Text = "Tiradentes"; button4.Text = "Deodoro da Fonseca";
                     correctAnswer = 1; break;
 
                 case 2:
+                    pictureBox1.Image = Properties.Resources.republica;
                     lblQuestion.Text = "Em que ano foi proclamada a República no Brasil?";
                     button1.Text = "1888"; button2.Text = "1889"; button3.Text = "1822"; button4.Text = "1930";
                     correctAnswer = 2; break;
 
                 case 3:
+                    pictureBox1.Image = Properties.Resources.zumbi_dos_palmares;
                     lblQuestion.Text = "Quem foi o líder do Quilombo dos Palmares?";
                     button1.Text = "Tiradentes"; button2.Text = "Zumbi dos Palmares"; button3.Text = "José Bonifácio"; button4.Text = "Duque de Caxias";
                     correctAnswer = 2; break;
 
                 case 4:
+                    pictureBox1.Image = Properties.Resources.josé;
                     lblQuestion.Text = "Quem é conhecido como o 'Patriarca da Independência'?";
                     button1.Text = "José Bonifácio"; button2.Text = "Dom Pedro II"; button3.Text = "Getúlio Vargas"; button4.Text = "Rui Barbosa";
                     correctAnswer = 1; break;
 
                 case 5:
+                    pictureBox1.Image = Properties.Resources.incofidencia;
                     lblQuestion.Text = "Qual movimento teve Tiradentes como símbolo?";
                     button1.Text = "Diretas Já"; button2.Text = "Revolta da Armada"; button3.Text = "Inconfidência Mineira"; button4.Text = "Revolução Farroupilha";
                     correctAnswer = 3; break;

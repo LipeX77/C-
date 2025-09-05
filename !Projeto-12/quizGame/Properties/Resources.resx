@@ -118,8 +118,14 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="black" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\black.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="csgo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\csgo.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dom.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="fortnite" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fortnite.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -127,13 +133,52 @@
   <data name="gears of war" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gears of war.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="goku" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\goku.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gotham" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gotham.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="halo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\halo.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="incofidencia" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\incofidencia.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="joiadotempo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\joiadotempo.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="josé" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\josé.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="killua" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\killua.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="kurama" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\kurama.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mikey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\mikey.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="questions" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\questions.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="republica" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\republica.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="stark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\stark.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="superman" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\superman.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="thousand sunny" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\thousand sunny.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="witcher3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\witcher3.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="zumbi dos palmares" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\zumbi dos palmares.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
