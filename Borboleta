@@ -1,0 +1,336 @@
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace quizGame
+{
+    public class ButterflyGameForm : Form
+    {
+        // ------------------- UI -------------------
+        private Panel hud;
+        private Panel area;
+        private Label lblFase, lblTempo, lblCapturadas, lblMeta;
+        private Button btnStart;
+
+        // ----------------- Game State -------------
+        private readonly int[] metas = { 20, 20, 30 };
+        private readonly int[] tempos = { 40, 40, 60 };          // segundos
+        private readonly int[] quantAtivas = { 10, 12, 15 };     // borboletas simultâneas
+        private readonly float[] velocidades = { 3f, 4.5f, 6.5f };
+        private readonly int[] tamanhos = { 40, 40, 24 };        // F3 menor
+
+        private int fase = 0;
+        private int capturadas = 0;
+        private int tempoRestante = 0;
+
+        private readonly List<Sprite> sprites = new List<Sprite>();
+        private readonly Random rng = new Random();
+
+        private System.Windows.Forms.Timer gameTimer;   // movimento (~50 FPS)
+        private System.Windows.Forms.Timer phaseTimer;  // cronômetro (1s)
+
+        // ---------------- Sprite helper -----------
+        private class Sprite
+        {
+            public PictureBox Pb;
+            public float X, Y;
+            public float Vx, Vy;
+        }
+
+        public ButterflyGameForm()
+        {
+            Text = "Caça às Borboletas";
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            ClientSize = new Size(900, 600);
+            StartPosition = FormStartPosition.CenterScreen;
+
+            BuildUI();
+            BuildTimers();
+            ShowStartScreen();
+        }
+
+        // =============== UI =======================
+        private void BuildUI()
+        {
+            hud = new Panel
+            {
+                Dock = DockStyle.Top,
+                Height = 60,
+                BackColor = Color.FromArgb(245, 245, 245)
+            };
+
+            area = new Panel
+            {
+                Dock = DockStyle.Fill,
+                BackColor = Color.White
+            };
+
+            lblFase = MakeHudLabel("Fase: 1", new Point(10, 10));
+            lblTempo = MakeHudLabel("Tempo: 00", new Point(180, 10));
+            lblCapturadas = MakeHudLabel("Capturadas: 0", new Point(350, 10));
+            lblMeta = MakeHudLabel("Meta: 20", new Point(570, 10));
+
+            btnStart = new Button
+            {
+                Text = "Começar",
+                Width = 120,
+                Height = 32,
+                Location = new Point(760, 14)
+            };
+            btnStart.Click += (s, e) => IniciarFase(0);
+
+            hud.Controls.AddRange(new Control[] { lblFase, lblTempo, lblCapturadas, lblMeta, btnStart });
+            Controls.Add(area);
+            Controls.Add(hud);
+        }
+
+        private Label MakeHudLabel(string text, Point p) =>
+            new Label
+            {
+                Text = text,
+                Location = p,
+                AutoSize = true,
+                Font = new Font("Segoe UI", 12, FontStyle.Bold)
+            };
+
+        private void BuildTimers()
+        {
+            gameTimer = new System.Windows.Forms.Timer { Interval = 20 };  // ~50 fps
+            gameTimer.Tick += GameTimer_Tick;
+
+            phaseTimer = new System.Windows.Forms.Timer { Interval = 1000 };
+            phaseTimer.Tick += PhaseTimer_Tick;
+        }
+
+        private void ShowStartScreen()
+        {
+            PararTimers();
+            LimparSprites();
+
+            fase = 0;
+            capturadas = 0;
+            tempoRestante = 0;
+
+            AtualizarHud();
+            btnStart.Enabled = true;
+            btnStart.Text = "Começar";
+        }
+
+        // =============== FASES ====================
+        private void IniciarFase(int idx)
+        {
+            fase = idx;
+            capturadas = 0;
+            tempoRestante = tempos[fase];
+
+            AtualizarHud();
+
+            LimparSprites();
+            int n = quantAtivas[fase];
+            int tam = tamanhos[fase];
+            float vel = velocidades[fase];
+
+            for (int i = 0; i < n; i++)
+                AdicionarBorboleta(tam, vel);
+
+            btnStart.Enabled = false;
+            gameTimer.Start();
+            phaseTimer.Start();
+        }
+
+        private void ProximaFaseOuVitoria()
+        {
+            PararTimers();
+
+            if (fase < 2)
+            {
+                MessageBox.Show($"Fase {fase + 1} concluída! Vamos para a próxima.", "Parabéns",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                IniciarFase(fase + 1);
+            }
+            else
+            {
+                MessageBox.Show("Você venceu! Todas as fases concluídas.", "Vitória",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ShowStartScreen();
+            }
+        }
+
+        private void Derrota()
+        {
+            PararTimers();
+            MessageBox.Show("Tempo esgotado! Tente novamente.", "Fim da fase",
+                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            ShowStartScreen();
+        }
+
+        private void PararTimers()
+        {
+            gameTimer.Stop();
+            phaseTimer.Stop();
+        }
+
+        // =============== SPRITES ==================
+        private void AdicionarBorboleta(int tam, float vel)
+        {
+            // posição
+            int w = area.ClientSize.Width;
+            int h = area.ClientSize.Height;
+            int x = rng.Next(0, Math.Max(1, w - tam));
+            int y = rng.Next(0, Math.Max(1, h - tam));
+
+            // direção aleatória com módulo "vel"
+            double ang = rng.NextDouble() * Math.PI * 2;
+            float vx = (float)(Math.Cos(ang) * vel);
+            float vy = (float)(Math.Sin(ang) * vel);
+
+            // imagem desenhada na hora (sem depender de Resources)
+            var bmp = CriarBorboletaBitmap(tam);
+
+            var pb = new PictureBox
+            {
+                Image = bmp,
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                Width = tam,
+                Height = tam,
+                Left = x,
+                Top = y,
+                BackColor = Color.Transparent,
+                Cursor = Cursors.Hand
+            };
+
+            var sp = new Sprite { Pb = pb, X = x, Y = y, Vx = vx, Vy = vy };
+            pb.Tag = sp;
+            pb.Click += OnButterflyClick;
+
+            sprites.Add(sp);
+            area.Controls.Add(pb);
+            pb.BringToFront();
+        }
+
+        private void Respawn(Sprite sp, int tam, float vel)
+        {
+            int w = area.ClientSize.Width;
+            int h = area.ClientSize.Height;
+            sp.X = rng.Next(0, Math.Max(1, w - tam));
+            sp.Y = rng.Next(0, Math.Max(1, h - tam));
+            double ang = rng.NextDouble() * Math.PI * 2;
+            sp.Vx = (float)(Math.Cos(ang) * vel);
+            sp.Vy = (float)(Math.Sin(ang) * vel);
+
+            sp.Pb.Left = (int)sp.X;
+            sp.Pb.Top = (int)sp.Y;
+        }
+
+        private void LimparSprites()
+        {
+            foreach (var sp in sprites)
+            {
+                sp.Pb.Click -= OnButterflyClick;
+                sp.Pb.Image?.Dispose();
+                sp.Pb.Dispose();
+            }
+            sprites.Clear();
+            area.Controls.Clear();
+        }
+
+        // =============== TIMERS ===================
+        private void GameTimer_Tick(object sender, EventArgs e)
+        {
+            int w = area.ClientSize.Width;
+            int h = area.ClientSize.Height;
+
+            foreach (var sp in sprites)
+            {
+                sp.X += sp.Vx;
+                sp.Y += sp.Vy;
+
+                // quicar nas bordas
+                if (sp.X < 0) { sp.X = 0; sp.Vx = -sp.Vx; }
+                if (sp.Y < 0) { sp.Y = 0; sp.Vy = -sp.Vy; }
+                if (sp.X + sp.Pb.Width > w) { sp.X = w - sp.Pb.Width; sp.Vx = -sp.Vx; }
+                if (sp.Y + sp.Pb.Height > h) { sp.Y = h - sp.Pb.Height; sp.Vy = -sp.Vy; }
+
+                sp.Pb.Left = (int)sp.X;
+                sp.Pb.Top = (int)sp.Y;
+            }
+        }
+
+        private void PhaseTimer_Tick(object sender, EventArgs e)
+        {
+            tempoRestante--;
+            AtualizarHud();
+            if (tempoRestante <= 0)
+                Derrota();
+        }
+
+        // =============== INPUT ====================
+        private void OnButterflyClick(object sender, EventArgs e)
+        {
+            var pb = (PictureBox)sender;
+            var sp = (Sprite)pb.Tag;
+
+            capturadas++;
+            AtualizarHud();
+
+            // re-aproveita o mesmo sprite, só reposiciona e dá nova velocidade
+            Respawn(sp, tamanhos[fase], velocidades[fase]);
+
+            if (capturadas >= metas[fase])
+                ProximaFaseOuVitoria();
+        }
+
+        // =============== HUD ======================
+        private void AtualizarHud()
+        {
+            lblFase.Text = $"Fase: {fase + 1}";
+            lblTempo.Text = $"Tempo: {tempoRestante:00}s";
+            lblCapturadas.Text = $"Capturadas: {capturadas}";
+            lblMeta.Text = $"Meta: {metas[fase]}";
+        }
+
+        // =============== GFX helper ===============
+        private Bitmap CriarBorboletaBitmap(int size)
+        {
+            // desenha uma "borboleta" simples (wings + body) pra não depender de Resources
+            var bmp = new Bitmap(size, size);
+            using (var g = Graphics.FromImage(bmp))
+            {
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                // cor aleatória suave
+                Color wing = Color.FromArgb(255, rng.Next(80, 200), rng.Next(80, 200), rng.Next(80, 200));
+                using (var wingBrush = new SolidBrush(wing))
+                using (var bodyBrush = new SolidBrush(Color.FromArgb(60, 40, 40)))
+                using (var pen = new Pen(Color.FromArgb(30, 30, 30), Math.Max(1, size / 20)))
+                {
+                    // asas
+                    var r = new Rectangle(0, size / 4, size / 2, size / 2);
+                    g.FillEllipse(wingBrush, r);
+                    r.X = size / 2;
+                    g.FillEllipse(wingBrush, r);
+                    g.DrawEllipse(pen, new Rectangle(0, size / 4, size / 2, size / 2));
+                    g.DrawEllipse(pen, new Rectangle(size / 2, size / 4, size / 2, size / 2));
+                    // corpo
+                    var bodyRect = new Rectangle(size / 2 - size / 12, size / 6, size / 6, size * 2 / 3);
+                    g.FillEllipse(bodyBrush, bodyRect);
+                }
+            }
+            return bmp;
+        }
+
+        // ---------- opcional: ESC para sair ----------
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Escape)
+            {
+                if (gameTimer.Enabled || phaseTimer.Enabled)
+                    PararTimers();
+                Close();
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+    }
+}
