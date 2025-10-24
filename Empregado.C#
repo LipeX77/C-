@@ -1,0 +1,149 @@
+using System.Data.SqlClient;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace lipex2
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        SqlConnection? conexao = null;
+        public MainWindow()
+        {
+            InitializeComponent();
+
+            String URL = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=MyProjectDB1;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";  
+
+            try
+            {
+                conexao = new(URL);
+                conexao.Open();
+                Console.WriteLine("Conexão OK");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Conexão NOT OK");
+                Console.WriteLine(ex.Message);
+            }
+
+            if (conexao != null)
+            {
+                Empregado empr1 = new(12, "LipeX", "120.123.345.67", "Rua 0" );
+                //Salvar(empregado, conexao);  
+            }
+
+            conexao?.Close();
+        }
+
+        private static void Salvar(Empregado empr, SqlConnection conexao)
+        {
+            Console.WriteLine("== Salvando Empregado ==");
+            var Cmd = conexao.CreateCommand();
+
+            Cmd.CommandText = "INSERT INTO Empregado (Matricula), (Nome), (CPF), (Endereco) VALUES (@matricula), (@nome), (@cpf), (@endereco)";
+            Cmd.Parameters.Add(new SqlParameter("matricula, nome, cpf, endereco", empr.Matricula, empr.Nome));
+
+            Cmd.ExecuteNonQuery();
+
+            AtualizarTableAutor(livro.AutorDoLivro, conexao);
+        }
+
+
+        private static void AtualizarTableAutor(Autor autor, SqlConnection conexao)
+        {
+            var Cmd = conexao.CreateCommand();
+            Cmd.CommandText = "SELECT MAX(Id) FROM Livro";
+            var resultado = Cmd.ExecuteReader();
+
+            resultado.Read();
+            var idRecuperado = resultado.GetInt32(0);
+
+            resultado.Close();
+
+
+            Cmd.CommandText = "UPDATE AUTOR SET Livro_idLivro = @idMax WHERE Id = @idAutor";
+            Cmd.Parameters.Add(new SqlParameter("idMax", idRecuperado));
+            Cmd.Parameters.Add(new SqlParameter("idAutor", autor.Id));
+
+            Cmd.ExecuteNonQuery();
+        }
+
+
+        private static void Salvar(Autor autor, SqlConnection conexao)
+        {
+            Console.WriteLine("== Salvando Autor ==");
+            var Cmd = conexao.CreateCommand();
+
+            Cmd.CommandText = "INSERT INTO Autor (Nome) VALUES (@nome)";
+            Cmd.Parameters.Add(new SqlParameter("nome", autor.Nome));
+
+            Cmd.ExecuteNonQuery();
+        }
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+    }
+}
+
+
+
+
+
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lipex2
+{
+    internal class Empregado
+    {
+        public int Matricula { get; set; }
+        public string Nome { get; set; }
+        public string CPF { get; set; }
+        public string Endereco { get; set; }
+
+
+        public Empregado() { }
+
+        public Empregado(int matricula, string nome, string cpf, string end)
+        {
+            Nome = nome;
+            Matricula = matricula;
+            Endereco = end;
+            CPF = cpf;
+        }
+
+        public override string? ToString()
+        {
+            return $"Empregado -> Matricula: {Matricula} | Nome: {Nome} | CPF: {CPF} | Endereco: {Endereco}";
+        }
+    }
+}
